@@ -121,12 +121,17 @@ function printWeather() {
 
     let day = currentDate.getDate();
 
-    let month = currentDate.getMonth() + 1;
+    // let month = currentDate.getMonth() + 1;
+
+    let currentMonthOptions = { month: "long" };
+
+    let currentMonthFull = new Intl.DateTimeFormat("en-GB", currentMonthOptions).format(currentDate);
+
 
     let year = currentDate.getFullYear();
 
 
-    cityName.innerHTML = savedData[0].name + " on " + day + "/" + month + "/" + year
+    cityName.innerHTML = savedData[0].name + " on " + day + " " + currentMonthFull + " " + year
 
     // let currentCity = document.createElement("h2");
     // currentCity.textContent = savedData[0].name + " ";
@@ -182,7 +187,7 @@ function printWeather() {
         //create bootstrap card for the five-day future forecast
 
         let fiveDayForecastContainer = document.createElement("div");
-        fiveDayForecastContainer.classList.add("card", "bg-light", "text-dark", "p-2", "m-1", "d-inline-flex");
+        fiveDayForecastContainer.classList.add("card", "text-light", "p-2", "m-1", "d-inline-flex");
         fiveDayForecastContainer.setAttribute("id", "five-day-container");
         futureForecast.append(fiveDayForecastContainer);
 
@@ -198,11 +203,26 @@ function printWeather() {
 
         let futureDate = new Date(weatherForecastData.daily[i].dt * 1000);
 
-        let futureday = futureDate.getDate();
 
-        let futuremonth = futureDate.getMonth() + 1;
+        // console.log(futureDate);
 
-        let futureyear = futureDate.getFullYear();
+        let futureDay = futureDate.getDate();
+
+        // console.log(futureday);
+
+        // let futureMonth = futureDate.getMonth() + 1;
+
+        // console.log(futuremonth);
+
+        let futureMonthOptions = { month: "long" };
+
+        let futureMonthFull = new Intl.DateTimeFormat("en-GB", futureMonthOptions).format(futureDate);
+
+        // console.log(futureMonthFull);
+
+        let futureYear = futureDate.getFullYear();
+
+        // console.log(futureyear);
 
 
         // cityName.innerHTML = savedData[0].name + " on " + day + "/" + month + "/" + year
@@ -215,7 +235,7 @@ function printWeather() {
 
         let futureForecastFragment = document.createDocumentFragment();
 
-        let futureForecastDetails = ["Date: " + futureday + "/" + futuremonth + "/" + futureyear, "Conditions: " + weatherForecastData.daily[i].weather[0].main, "Temp: " + weatherForecastData.current.temp, "Wind: " + weatherForecastData.daily[i].wind_speed, "Humidity: " + weatherForecastData.daily[i].humidity, "Uv Index: " + weatherForecastData.daily[i].uvi];
+        let futureForecastDetails = [futureDay + " " + futureMonthFull + " " + futureYear, "Conditions: " + weatherForecastData.daily[i].weather[0].main, "Temp: " + weatherForecastData.current.temp, "Wind: " + weatherForecastData.daily[i].wind_speed, "Humidity: " + weatherForecastData.daily[i].humidity, "Uv Index: " + weatherForecastData.daily[i].uvi];
 
         futureForecastDetails.forEach(function (future) {
 

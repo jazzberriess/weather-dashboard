@@ -1,3 +1,7 @@
+:root {
+    --bg-color: linear-gradient(140deg,rgba(0,16,36,100),rgba(62,9,98,100),rgba(78,77,166,100),rgba(0,212,255,100));
+}
+
 * {
     box-sizing: border-box;
 }
@@ -7,26 +11,38 @@
 } */
 
 header {
-    height: 5rem;
-    text-align:center;
+    background: var(--bg-color);
 }
+
+#page-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5rem;
+    color: rgba(248,254,255,100);
+}
+
 
 li {
     list-style: none;
 }
 
 .weather-icon {
-    width: 5rem;
+    width: 5rem !important;
     background: lightblue;
     border-radius: 50%;
 }
 
 .future-weather-icon {
-        width: 3rem;
+        width: 3rem !important;
         background: lightblue;
         border-radius: 50%;
     }
 
-/* .five-day-container {
-    background: pink;
-} */
+#five-day-container {
+    background: var(--bg-color);
+}
+
+#today-forecast-container {
+    border: 2px solid blue;
+}

@@ -26,6 +26,8 @@ Link to the [GitHub Repo](https://github.com/jazzberriess/wk-06-weather-dashboar
 
 * [MDN Documentation - createDocumentFragment](https://developer.mozilla.org/en-US/docs/Web/API/Document/createDocumentFragment)
 
+* [MDN Documentation - Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options)
+
 
 
 
