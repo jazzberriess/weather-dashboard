@@ -4,6 +4,8 @@ console.log("This script has loaded");
 
 const APIKey = "6b826d4c34586e17f4f669d088a91aed";
 
+let i = 0;
+
 let searchFormEl = document.getElementById("search-form");
 
 let savedData = {};
@@ -16,6 +18,8 @@ let weatherForecastData = {};
 
 let cityInputVal = document.getElementById("city-search-input");
 
+let cityName = document.getElementById("current-city-name");
+
 let todayForecast = document.getElementById("today-forecast");
 let forecastDetails = document.getElementById("forecast-details");
 let futureForecast = document.getElementById("future-forecast");
@@ -25,6 +29,8 @@ let searchBtn = document.getElementById("search-btn");
 let previousSearches = document.getElementById("previous-searches");
 
 let searchHistory = JSON.parse(localStorage.getItem("search")) || [];
+
+
 
 //prevent form from refreshing page and prevent user from not entering a city
 
@@ -42,9 +48,11 @@ function formSubmitHandler(event) {
 
     // searchHistory();
 
+
     getApi();
 
 }
+
 
 //get the API
 
@@ -109,6 +117,23 @@ function printWeather() {
     let todayForecastCard = document.createElement('div');
     todayForecastCard.classList.add("card-body");
 
+    //current time  here
+
+    let currentDate = new Date(weatherForecastData.current.dt * 1000);
+
+    let day = currentDate.getDate();
+
+    let month = currentDate.getMonth() + 1;
+
+    let year = currentDate.getFullYear();
+
+
+    cityName.innerHTML = savedData[0].name + " on " + day + "/" + month + "/" + year
+
+    // let currentCity = document.createElement("h2");
+    // currentCity.textContent = savedData[0].name + " ";
+    // cityName.appendChild(currentCity);
+
     let currentForecast = document.getElementById("current-container")
 
     let currentForecastFragment = document.createDocumentFragment();
@@ -148,7 +173,7 @@ function printWeather() {
 
     //future forecast. Loop over the weatherForecastData.daily object and return conditions, temp, wind, humidity and UV for the next five days
 
-    for (let i = 0; i < Object.keys(weatherForecastData.daily)[5]; i++) {
+    for (let i = 1; i < Object.keys(weatherForecastData.daily)[6]; i++) {
 
         //create bootstrap card for the five-day future forecast
 
@@ -165,9 +190,22 @@ function printWeather() {
 
         // let fiveDayFutureForecast = document.getElementById("five-day-container")
 
+        //future dates
+
+        let futureDate = new Date(weatherForecastData.daily[i].dt * 1000);
+
+        let futureday = futureDate.getDate();
+
+        let futuremonth = futureDate.getMonth() + 1;
+
+        let futureyear = futureDate.getFullYear();
+
+
+        // cityName.innerHTML = savedData[0].name + " on " + day + "/" + month + "/" + year
+
         let futureForecastFragment = document.createDocumentFragment();
 
-        let futureForecastDetails = ["Conditions: " + weatherForecastData.daily[i].weather[0].main, "Temp: " + weatherForecastData.current.temp, "Wind: " + weatherForecastData.daily[i].wind_speed, "Humidity: " + weatherForecastData.daily[i].humidity, "Uv Index: " + weatherForecastData.daily[i].uvi];
+        let futureForecastDetails = ["Date: " + futureday + "/" + futuremonth + "/" + futureyear + "Conditions: " + weatherForecastData.daily[i].weather[0].main, "Temp: " + weatherForecastData.current.temp, "Wind: " + weatherForecastData.daily[i].wind_speed, "Humidity: " + weatherForecastData.daily[i].humidity, "Uv Index: " + weatherForecastData.daily[i].uvi];
 
         futureForecastDetails.forEach(function (future) {
 
@@ -184,8 +222,8 @@ function printWeather() {
 
         fiveDayForecastContainer.appendChild(futureForecastFragment);
     }
-
 }
+
 
 // searchBtn.addEventListener("click", function () {
 
@@ -239,6 +277,26 @@ function printWeather() {
 //     localStorage.setItem("History", JSON.stringify(previousSearches));
 // }
 
+// function showDate() {
+
+//     let currentTimestamp = parseInt(weatherForecastData.current.dt);
+
+//     let currentMilliseconds = currentTimestamp * 1000;
+
+//     let currentDate = new Date(currentMilliseconds);
+
+//     currentDateArray = currentDate.toLocaleString("en-UK");
+
+//     console.log(currentDateArray);
+
+// }
+
+// function currentDate() {
+
+//     let todayDate = document.createElement("h2");
+//     todayDate.text(moment.unix(parseInt(weatherForecastData.current.dt)).format("DD MM YYYY"));
+//     currentCity.appendChild(currentDate);
+// }
 
 
 searchFormEl.addEventListener("submit", formSubmitHandler);
