@@ -12,10 +12,21 @@ Link to the [GitHub Repo](https://github.com/jazzberriess/wk-06-weather-dashboar
 
 ## Resources
 
+* [Open WeatherMap Documentation](https://openweathermap.org/api/one-call-api)
+
 * [Bootstrap Documentation](https://getbootstrap.com/docs/5.1/getting-started/introduction/)
+
+* [Request-Response: The Full-Stack Blog - How to Use API Keys](https://coding-boot-camp.github.io/full-stack/apis/how-to-use-api-keys)
+
 * [How to make multiple API calls](https://gomakethings.com/how-to-use-the-fetch-method-to-make-multiple-api-calls-with-vanilla-javascript/)
 
-* [Defining JSON Object length](https://stackoverflow.com/questions/19032954/why-is-jsonobject-length-undefined)
+* [Stack Overflow - Defining JSON Object length](https://stackoverflow.com/questions/19032954/why-is-jsonobject-length-undefined)
+
+* [Stack Overflow - Append multiple items in JavaScript](https://stackoverflow.com/questions/36798005/append-multiple-items-in-javascript)
+
+* [MDN Documentation - createDocumentFragment](https://developer.mozilla.org/en-US/docs/Web/API/Document/createDocumentFragment)
+
+
 
 
 ## Licensce 
