@@ -4,8 +4,6 @@ console.log("This script has loaded");
 
 const APIKey = "6b826d4c34586e17f4f669d088a91aed";
 
-let i = 0;
-
 let searchFormEl = document.getElementById("search-form");
 
 let savedData = {};
@@ -138,10 +136,16 @@ function printWeather() {
 
     let currentForecastFragment = document.createDocumentFragment();
 
+    let weatherIcon = document.createElement("img");
+    weatherIcon.classList.add("weather-icon");
+    weatherIcon.setAttribute("src", "https://openweathermap.org/img/wn/" + weatherForecastData.current.weather[0].icon + "@2x.png");
+    weatherIcon.setAttribute("alt", "Icon showing current weather status of " + weatherForecastData.current.weather[0].description);
+    currentForecast.appendChild(weatherIcon);
+
     let currentForecastDetails = ["Conditions: " + weatherForecastData.current.weather[0].main, "Temp: " + weatherForecastData.current.temp, "Wind: " + weatherForecastData.current.wind_speed, "Humidity: " + weatherForecastData.current.humidity, "Uv Index: " + weatherForecastData.current.uvi];
 
     currentForecastDetails.forEach(function (current) {
-        let liEl = document.createElement("li");
+        let liEl = document.createElement("p");
         liEl.textContent = current;
         currentForecastFragment.appendChild(liEl);
 
@@ -178,7 +182,7 @@ function printWeather() {
         //create bootstrap card for the five-day future forecast
 
         let fiveDayForecastContainer = document.createElement("div");
-        fiveDayForecastContainer.classList.add("card", "bg-light", "text-dark", "p-2")
+        fiveDayForecastContainer.classList.add("card", "bg-light", "text-dark", "p-2", "m-1", "d-inline-flex");
         fiveDayForecastContainer.setAttribute("id", "five-day-container");
         futureForecast.append(fiveDayForecastContainer);
 
@@ -203,9 +207,15 @@ function printWeather() {
 
         // cityName.innerHTML = savedData[0].name + " on " + day + "/" + month + "/" + year
 
+        let futureWeatherIcon = document.createElement("img");
+        futureWeatherIcon.classList.add("future-weather-icon");
+        futureWeatherIcon.setAttribute("src", "https://openweathermap.org/img/wn/" + weatherForecastData.daily[i].weather[0].icon + "@2x.png");
+        futureWeatherIcon.setAttribute("alt", "Icon showing current weather status of " + weatherForecastData.daily[i].weather[0].description);
+        fiveDayForecastContainer.appendChild(futureWeatherIcon);
+
         let futureForecastFragment = document.createDocumentFragment();
 
-        let futureForecastDetails = ["Date: " + futureday + "/" + futuremonth + "/" + futureyear + "Conditions: " + weatherForecastData.daily[i].weather[0].main, "Temp: " + weatherForecastData.current.temp, "Wind: " + weatherForecastData.daily[i].wind_speed, "Humidity: " + weatherForecastData.daily[i].humidity, "Uv Index: " + weatherForecastData.daily[i].uvi];
+        let futureForecastDetails = ["Date: " + futureday + "/" + futuremonth + "/" + futureyear, "Conditions: " + weatherForecastData.daily[i].weather[0].main, "Temp: " + weatherForecastData.current.temp, "Wind: " + weatherForecastData.daily[i].wind_speed, "Humidity: " + weatherForecastData.daily[i].humidity, "Uv Index: " + weatherForecastData.daily[i].uvi];
 
         futureForecastDetails.forEach(function (future) {
 

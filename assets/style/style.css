@@ -2,6 +2,31 @@
     box-sizing: border-box;
 }
 
-body {
+/* body {
     background: lightblue;
+} */
+
+header {
+    height: 5rem;
+    text-align:center;
 }
+
+li {
+    list-style: none;
+}
+
+.weather-icon {
+    width: 5rem;
+    background: lightblue;
+    border-radius: 50%;
+}
+
+.future-weather-icon {
+        width: 3rem;
+        background: lightblue;
+        border-radius: 50%;
+    }
+
+/* .five-day-container {
+    background: pink;
+} */
