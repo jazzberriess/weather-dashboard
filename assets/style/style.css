@@ -31,12 +31,14 @@ li {
     width: 5rem !important;
     background: lightblue;
     border-radius: 50%;
+    margin: 1rem;
 }
 
 .future-weather-icon {
         width: 3rem !important;
-        /* background: lightblue; */
+        background: lightblue;
         border-radius: 50%;
+        margin: 1rem;
     }
 
 #five-day-container {
