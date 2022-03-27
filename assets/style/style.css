@@ -35,7 +35,7 @@ li {
 
 .future-weather-icon {
         width: 3rem !important;
-        background: lightblue;
+        /* background: lightblue; */
         border-radius: 50%;
     }
 

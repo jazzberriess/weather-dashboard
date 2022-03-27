@@ -24,6 +24,7 @@ let futureForecast = document.getElementById("future-forecast");
 
 let searchBtn = document.getElementById("search-btn");
 
+
 let previousSearches = document.getElementById("previous-searches");
 
 let searchHistory = JSON.parse(localStorage.getItem("search")) || [];
@@ -150,14 +151,50 @@ function printWeather() {
     let currentForecastDetails = ["Conditions: " + weatherForecastData.current.weather[0].main, "Temp: " + weatherForecastData.current.temp, "Wind: " + weatherForecastData.current.wind_speed, "Humidity: " + weatherForecastData.current.humidity, "Uv Index: " + weatherForecastData.current.uvi];
 
     currentForecastDetails.forEach(function (current) {
-        let liEl = document.createElement("p");
+        let liEl = document.createElement("li");
+        liEl.setAttribute("class", "li-items");
         liEl.textContent = current;
         currentForecastFragment.appendChild(liEl);
 
-        //ADD STYLING FOR YOUR LI STUFF HERE
     })
 
     currentForecast.appendChild(currentForecastFragment);
+
+    //add colour-coding to the li element that has the UV Index rating. Create an array from nodeObjects
+
+    let liEls = Array.from(document.querySelectorAll(".li-items"));
+
+    if (weatherForecastData.current.uvi <= 2) {
+
+        liEls[4].setAttribute("class", "bg-success", "text-white");
+
+        console.log(liEls[4]);
+
+    } else if (weatherForecastData.current.uvi >= 3 && weatherForecastData.current.uvi <= 5) {
+
+        liEls[4].setAttribute("class", "bg-warning");
+        console.log(liEls[4]);
+    }
+    else if (weatherForecastData.current.uvi >= 6 && weatherForecastData.current.uvi <= 7) {
+
+        liEls[4].setAttribute("class", "bg-danger", "bg-opacity-50", "text-white");
+
+    }
+
+    else {
+
+        liEls[4].setAttribute("class", "bg-danger", "text-white");
+
+    }
+
+    // let liEls = Array.from(document.querySelectorAll(".li-items"));
+
+    // console.log(liEls[5]);
+
+    // liEls[5].setAttribute("class", "bg-danger");
+
+    // alert("high uvi");
+    // }
 
     // let cityEl = document.createElement('h3');
     // cityEl.textContent = savedData[0].name + " - " + weatherForecastData.current.weather[0].main;
@@ -235,7 +272,7 @@ function printWeather() {
 
         let futureForecastFragment = document.createDocumentFragment();
 
-        let futureForecastDetails = [futureDay + " " + futureMonthFull + " " + futureYear, "Conditions: " + weatherForecastData.daily[i].weather[0].main, "Temp: " + weatherForecastData.current.temp, "Wind: " + weatherForecastData.daily[i].wind_speed, "Humidity: " + weatherForecastData.daily[i].humidity, "Uv Index: " + weatherForecastData.daily[i].uvi];
+        let futureForecastDetails = [futureDay + " " + futureMonthFull + " " + futureYear, "Conditions: " + weatherForecastData.daily[i].weather[0].main, "Temp: " + weatherForecastData.current.temp, "Wind: " + weatherForecastData.daily[i].wind_speed, "Humidity: " + weatherForecastData.daily[i].humidity];
 
         futureForecastDetails.forEach(function (future) {
 

@@ -26,6 +26,8 @@ Link to the [GitHub Repo](https://github.com/jazzberriess/wk-06-weather-dashboar
 
 * [MDN Documentation - createDocumentFragment](https://developer.mozilla.org/en-US/docs/Web/API/Document/createDocumentFragment)
 
+* [Stack Overflow - Convert a UNIX timestamp to time in JavaScript](https://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript)
+
 * [MDN Documentation - Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options)
 
 
