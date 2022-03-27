@@ -154,7 +154,7 @@ function printWeather() {
     futureForecast.innerHTML = "";
 
     let todayForecastContainer = document.createElement("div");
-    todayForecastContainer.classList.add("card", "text-dark", "p-2", "colour-changes");
+    todayForecastContainer.classList.add("card", "text-dark", "p-2", "colour-changes", "pt-3");
     todayForecastContainer.setAttribute("id", "current-container");
     todayForecast.append(todayForecastContainer);
 

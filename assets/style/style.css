@@ -2,15 +2,15 @@
     --bg-color: linear-gradient(140deg,rgba(0,16,36,100),rgba(62,9,98,100),rgba(78,77,166,100),rgba(0,212,255,100));
 }
 
-* {
-    box-sizing: border-box;
-}
-
+/* * {
+    box-sizing:unset;
+} */
+/* 
 body {
-    /* background: lightblue; */
-    /* margin: 1rem;
-padding: 1rem; */
-}
+    background: lightblue;
+    margin: 1rem;
+padding: 1rem;
+} */
 
 section {
     margin: 2rem;
@@ -39,6 +39,20 @@ li {
     list-style: none;
     padding-left: 0.2rem;
     padding-right: 0.2rem;
+    line-height: 2rem;
+    font-size: 1.1rem;
+}
+
+/* bolding the date on the future forecast cards */
+
+li:first-of-type {
+    font-weight: 600;
+}
+
+/* removing the bolded font from the first li element in the current forecast card */
+
+li.li-items {
+    font-weight: 400;
 }
 
 #current-city-name {
@@ -93,33 +107,43 @@ white-space: pre-line;
 }
 
 .thunderstorm {
-    background-color: darkgray !important;
+    background-color: darkgray;
 }
 
 .drizzle {
-    background-color:gainsboro !important;
+    background-color:gainsboro ;
 }
 
 .rain {
-    background-color: lightblue !important;
+    background-color:lightsteelblue ;
 }
 
 .snow {
-    background-color: aliceblue  !important;
+    background-color: aliceblue  ;
 }
 
 .atmosphere {
-    background-color: lavender  !important;
+    background-color: lavender  ;
 }
 
 .clouds {
-    background-color: lightgrey  !important;
+    background-color: lightgrey  ;
 }
 
 .clear {
-    background-color: skyblue  !important;
+    background-color:lemonchiffon  ;
 }
 
 footer h3 {
-    font-size: 1.1rem !important;
+    font-size: 1.1rem ;
+    margin-left: 2rem;
+}
+
+/* media query for smaller screens so that the search history is positoned at the bottom of the forecast*/
+
+@media screen and (max-width: 600px) {
+
+    .previous {
+        order: 4
+    }
 }
