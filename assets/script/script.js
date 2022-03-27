@@ -20,6 +20,7 @@ let futureForecast = document.getElementById("future-forecast");
 
 let searchBtn = document.getElementById("search-btn");
 
+let clearHistory = document.getElementById("clear-history-btn");
 
 let previousSearches = document.getElementById("previous-searches");
 
@@ -47,7 +48,7 @@ function formSubmitHandler(event) {
 
     console.log(cityInputVal)
 
-    readThingy();
+    saveHistory();
 
     getApi();
 
@@ -61,25 +62,25 @@ function formSubmitHandler(event) {
 // }
 
 
-function readThingy() {
+function saveHistory() {
 
-    let retrieveThingy = [];
+    // let retrieveThingy = [];
 
     let savedCity = cityInputVal;
 
-    retrieveThingy.push(savedCity);
+    // retrieveThingy.push(savedCity);
 
     localStorage.setItem(savedCity, savedCity);
 
 
 
-    retrieveThingy = localStorage.getItem(savedCity, savedCity);
+    // retrieveThingy = localStorage.getItem(savedCity, savedCity);
 
-    let printThingy = document.createElement("button");
-    printThingy.setAttribute("class", "searchHistoryBtn")
-    printThingy.textContent = cityInputVal;
-    printThingy.value = cityInputVal;
-    previousSearches.appendChild(printThingy);
+    let printHistory = document.createElement("button");
+    printHistory.setAttribute("class", "searchHistoryBtn")
+    printHistory.textContent = cityInputVal;
+    printHistory.value = cityInputVal;
+    previousSearches.appendChild(printHistory);
 
 
     // let searchInput = cityInputVal.value;
@@ -99,7 +100,7 @@ function getApi() {
 
     console.log(cityInputVal)
 
-    let queryUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityInputVal + "&appid=" + APIKey;
+    let queryUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + cityInputVal + "&appid=" + APIKey;
 
     fetch(queryUrl)
         .then(function (response) {
@@ -150,8 +151,10 @@ function printWeather() {
 
     todayForecast.innerHTML = "";
 
+    futureForecast.innerHTML = "";
+
     let todayForecastContainer = document.createElement("div");
-    todayForecastContainer.classList.add("card", "bg-light", "text-dark", "p-2");
+    todayForecastContainer.classList.add("card", "text-dark", "p-2", "colour-changes");
     todayForecastContainer.setAttribute("id", "current-container");
     todayForecast.append(todayForecastContainer);
 
@@ -168,12 +171,21 @@ function printWeather() {
 
     let currentMonthFull = new Intl.DateTimeFormat("en-GB", currentMonthOptions).format(currentDate);
 
-
     let year = currentDate.getFullYear();
 
-    //dispay the city name from the search and the current date
+    //dispay the city name and country from the search and the current date
 
-    cityName.innerHTML = savedData[0].name + " on " + day + " " + currentMonthFull + " " + year
+    let countryName = new Intl.DisplayNames(["en"], { type: "region" });
+
+    cityName.innerHTML = savedData[0].name + ", " + countryName.of(savedData[0].country);
+
+    //display the date
+
+    let displayDate = document.createElement("p");
+    displayDate.classList.add("display-date");
+    displayDate.textContent = day + " " + currentMonthFull + " " + year;
+
+    cityName.appendChild(displayDate);
 
     //create elements to display the desired weather details (weather icon, conditions, temp, wind speed, humidity and UV index)
 
@@ -207,24 +219,26 @@ function printWeather() {
 
     if (weatherForecastData.current.uvi <= 2) {
 
-        liEls[4].setAttribute("class", "bg-success", "text-white");
+        liEls[4].classList.add("bg-success", "text-white");
 
         console.log(liEls[4]);
 
-    } else if (weatherForecastData.current.uvi >= 3 && weatherForecastData.current.uvi <= 5) {
+    } else if (weatherForecastData.current.uvi >= 2 && weatherForecastData.current.uvi <= 5) {
 
-        liEls[4].setAttribute("class", "bg-warning");
+        liEls[4].classList.add("bg-warning");
         console.log(liEls[4]);
     }
-    else if (weatherForecastData.current.uvi >= 6 && weatherForecastData.current.uvi <= 7) {
+    else if (weatherForecastData.current.uvi >= 5 && weatherForecastData.current.uvi <= 7) {
 
-        liEls[4].setAttribute("class", "bg-danger", "bg-opacity-50", "text-white");
+        liEls[4].classList.add("bg-danger", "bg-opacity-50", "text-white");
 
     } else {
 
-        liEls[4].setAttribute("class", "bg-danger", "text-white");
+        liEls[4].classList.add("bg-danger", "text-white");
 
     }
+    //make the background of today's forecast change depending on the weather condition
+    currentWeatherColour();
 
     // let liEls = Array.from(document.querySelectorAll(".li-items"));
 
@@ -420,20 +434,52 @@ function printWeather() {
 //     readThingy;
 // }
 
+//just adding some colour changes to the background of the current weather card for funsies
+
+function currentWeatherColour() {
+
+    let colourChanges = document.getElementById("current-container");
+    if (weatherForecastData.current.weather[0].main === "Thunderstorm") {
+        colourChanges.classList.add("class", "thunderstorm");
+    } else if (weatherForecastData.current.weather[0].main === "Drizzle") {
+        colourChanges.classList.add("class", "drizzle");
+    } else if (weatherForecastData.current.weather[0].main === "Rain") {
+        colourChanges.classList.add("class", "rain");
+    } else if (weatherForecastData.current.weather[0].main === "Snow") {
+        colourChanges.classList.add("class", "snow");
+    } else if (weatherForecastData.current.weather[0].main === "Clear") {
+        colourChanges.classList.add("class", "clear");
+    } else if (weatherForecastData.current.weather[0].main === "Clouds") {
+        colourChanges.classList.add("class", "clouds");
+    } else {
+        colourChanges.classList.add("class", "atmosphere");
+    }
+}
 
 previousSearches.addEventListener("click", function (event) {
     if (event.target.className === "searchHistoryBtn") {
         console.log("click!");
+        event.stopPropagation;
 
-        let savedHistory = Array.from(document.querySelectorAll(".searchHistoryBtn"));
+        // let savedHistory = Array.from(document.querySelectorAll(".searchHistoryBtn"));
 
-        cityInputVal = savedHistory[i].value;
+        cityInputVal = event.target.value;
         // cityInputVal = "";
         // localStorage.getItem("Thingy");
         getApi();
     }
 
 });
+
+clearHistory.addEventListener("click", function () {
+    // event.preventDefault;
+    // event.stopPropagation;
+    console.log("click!");
+    localStorage.clear();
+    previousSearches.innerHTML = "";
+
+})
+
 // searchHistoryBtn.addEventListener("click", function (event) {
 //     event.stopPropagation();
 //     event.target(getApi);

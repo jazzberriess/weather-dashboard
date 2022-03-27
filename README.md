@@ -30,6 +30,10 @@ Link to the [GitHub Repo](https://github.com/jazzberriess/wk-06-weather-dashboar
 
 * [MDN Documentation - Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options)
 
+* [Stack Overflow - Convert NodeList to an Array](https://stackoverflow.com/questions/44641918/converting-nodelist-to-array-and-appending-new-class-to-each-node)
+
+* [MDN Documentation - NodeList](https://developer.mozilla.org/en-US/docs/Web/API/NodeList)
+
 
 
 

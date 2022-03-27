@@ -26,16 +26,16 @@
         <div class="container-fluid">
 
             <div class="row" id="city-search">
-                <div class="col-sm-3 p-3 m-1 text-dark border-end border-bottom">
-                    <h2>Search for a City</h2>
+                <div class="col-sm-3 p-3 m-1 text-dark border">
+                    <h2 class="header-align-center">Search for a City</h2>
                     <form class="row" id="search-form">
-                        <input class="form-control-sm me-2 p-2" type="search" placeholder="Search" aria-label="Search"
-                            id="city-search-input">
+                        <input class="form-control-sm me-2 mt-2 p-2" type="search" placeholder="Search"
+                            aria-label="Search" id="city-search-input">
                         <button class="btn btn-outline-primary mt-2" type="submit" id="search-btn">Search</button>
                     </form>
                 </div>
 
-                <div class="col-sm-8  text-dark p-3 m-1 bg-body border-top border-start">
+                <div class="col-sm-8  text-dark p-3 m-1 bg-body border">
                     <h2 id="forecast-details">Today's forecast for <span id="current-city-name"></span></h2>
                     <div id="today-forecast">
 
@@ -45,28 +45,30 @@
             </div>
             <!-- previous searches history area -->
             <div class="row">
-                <div class="col-sm-3 m-1 text-dark border-end border-top">
-                    <h2>Previous searches</h2>
+                <div class="col-sm-3 m-1 p-3 text-dark border">
+                    <h2 class="header-align-center">Previous searches</h2>
+                    <button type="button" class="btn btn-primary" id="clear-history-btn">Clear History</button>
                     <div id="previous-searches">
+
 
 
                     </div>
                 </div>
 
 
-                <div class="col-sm-8 bg-light text-dark p-3 m-1 bg-body border-top border-start" id="future-forecast">
-
-
-                    <!-- <div id="future-forecast"> -->
+                <div class="col-sm-8 bg-light text-dark p-3 m-1 bg-body border" id="future-forecast-container">
 
                     <h2>5-Day forecast </h2>
+                    <div id="future-forecast">
 
 
-                    <ul class="five-day-container">
 
-                    </ul>
 
-                    <!-- </div> -->
+                        <ul class="five-day-container">
+
+                        </ul>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -75,6 +77,9 @@
         </div>
 
     </section>
+    <footer>
+        <h3>© 2022 Christi Scappatura</h3>
+    </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
         integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>

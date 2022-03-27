@@ -6,12 +6,24 @@
     box-sizing: border-box;
 }
 
-/* body {
-    background: lightblue;
-} */
+body {
+    /* background: lightblue; */
+    /* margin: 1rem;
+padding: 1rem; */
+}
+
+section {
+    margin: 2rem;
+
+}
 
 header {
     background: var(--bg-color);
+}
+
+h2.header-align-center {
+    font-size: 1.5rem !important;
+    text-align: center;
 }
 
 #page-title {
@@ -25,11 +37,23 @@ header {
 
 li {
     list-style: none;
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+}
+
+#current-city-name {
+white-space: pre-line;
+
+}
+
+.display-date {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 .weather-icon {
     width: 5rem !important;
-    background: lightblue;
+    /* background: lightblue; */
     border-radius: 50%;
     margin: 1rem;
 }
@@ -47,4 +71,55 @@ li {
 
 #today-forecast-container {
     border: 2px solid blue;
+}
+
+#clear-history-btn {
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.searchHistoryBtn {
+    width: 100%;
+    border-radius: 2rem;
+    padding-left: 0.2rem;
+
+
+}
+
+.bg-success, .bg-warning, .bg-danger {
+    width: fit-content;
+
+}
+
+.thunderstorm {
+    background-color: darkgray !important;
+}
+
+.drizzle {
+    background-color:gainsboro !important;
+}
+
+.rain {
+    background-color: lightblue !important;
+}
+
+.snow {
+    background-color: aliceblue  !important;
+}
+
+.atmosphere {
+    background-color: lavender  !important;
+}
+
+.clouds {
+    background-color: lightgrey  !important;
+}
+
+.clear {
+    background-color: skyblue  !important;
+}
+
+footer h3 {
+    font-size: 1.1rem !important;
 }
