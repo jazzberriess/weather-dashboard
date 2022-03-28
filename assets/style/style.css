@@ -1,29 +1,32 @@
 :root {
     --bg-color: linear-gradient(140deg,rgba(0,16,36,100),rgba(62,9,98,100),rgba(78,77,166,100),rgba(0,212,255,100));
+
+    --text-shadow: 0.1rem 0.1rem rgba(10,10,10,75);
+}
+/* overriding the margin right for bootstrap rows as it was doing funky things on mobile for my future forecast cards */
+.row {
+    margin-right: 0;
+    margin-left: 0;
 }
 
-/* * {
-    box-sizing:unset;
-} */
-/* 
+/* setting the font */
+
 body {
-    background: lightblue;
-    margin: 1rem;
-padding: 1rem;
-} */
+    font-family: 'Raleway', sans-serif;
+}
+
+/* adding a margin to the section */
 
 section {
     margin: 2rem;
 
 }
 
+/* styling for the header */
+
 header {
     background: var(--bg-color);
-}
-
-h2.header-align-center {
-    font-size: 1.5rem !important;
-    text-align: center;
+    text-shadow: var(--text-shadow);
 }
 
 #page-title {
@@ -34,6 +37,14 @@ h2.header-align-center {
     color: rgba(248,254,255,100);
 }
 
+/* alignment and font size for search titles  */
+
+h2.header-align-center {
+    font-size: 1.6rem;
+    text-align: center;
+}
+
+/* styling for li elements added in with JavaScript. Added text shadow for readability on darker background colour */
 
 li {
     list-style: none;
@@ -41,51 +52,56 @@ li {
     padding-right: 0.2rem;
     line-height: 2rem;
     font-size: 1.1rem;
+    text-shadow: var(--text-shadow);
+    
 }
 
 /* bolding the date on the future forecast cards */
 
 li:first-of-type {
-    font-weight: 600;
+    font-weight: 900;
 }
 
-/* removing the bolded font from the first li element in the current forecast card */
+/* removing the bolded font from the first li element in the current forecast card. Removing the text-shadow from the current forecast card */
 
 li.li-items {
-    font-weight: 400;
+    font-weight: 300;
+    text-shadow: none;
+    
 }
 
-#current-city-name {
-white-space: pre-line;
-
-}
+/* styling for displayed date */
 
 .display-date {
     margin-top: 1rem;
     margin-bottom: 1rem;
+    font-weight: 700;
 }
+
+/* Sizing for icons because for some reason they're huge?? */
 
 .weather-icon {
     width: 5rem !important;
-    /* background: lightblue; */
     border-radius: 50%;
     margin: 1rem;
 }
 
 .future-weather-icon {
         width: 3rem !important;
-        background: lightblue;
+        background: rgba(173, 216, 230, 0.70);
         border-radius: 50%;
         margin: 1rem;
     }
 
+/* adding the gradient background colour to the future forecast cards */
+
 #five-day-container {
     background: var(--bg-color);
+    margin: 0.5rem;
+    padding: 1rem;
 }
 
-#today-forecast-container {
-    border: 2px solid blue;
-}
+/* styling for buttons */
 
 #clear-history-btn {
     align-items: center;
@@ -101,10 +117,13 @@ white-space: pre-line;
 
 }
 
+/* styling for the highlight colours on the UV Index elements */
+
 .bg-success, .bg-warning, .bg-danger {
     width: fit-content;
-
 }
+
+/* setting the colurs for various weather statuses */
 
 .thunderstorm {
     background-color: darkgray;
@@ -134,6 +153,8 @@ white-space: pre-line;
     background-color:lemonchiffon  ;
 }
 
+/* styling for footer */
+
 footer h3 {
     font-size: 1.1rem ;
     margin-left: 2rem;
@@ -141,7 +162,7 @@ footer h3 {
 
 /* media query for smaller screens so that the search history is positoned at the bottom of the forecast*/
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 550px) {
 
     .previous {
         order: 4

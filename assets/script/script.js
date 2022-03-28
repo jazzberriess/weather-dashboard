@@ -1,5 +1,3 @@
-console.log("This script has loaded");
-
 //API key
 
 const APIKey = "6b826d4c34586e17f4f669d088a91aed";
@@ -8,14 +6,12 @@ const APIKey = "6b826d4c34586e17f4f669d088a91aed";
 
 let searchFormEl = document.getElementById("search-form");
 
-// let cityInputVal = document.getElementById("city-search-input");
-
-let cityInputVal = [];
-
 let cityName = document.getElementById("current-city-name");
 
 let todayForecast = document.getElementById("today-forecast");
+
 let forecastDetails = document.getElementById("forecast-details");
+
 let futureForecast = document.getElementById("future-forecast");
 
 let searchBtn = document.getElementById("search-btn");
@@ -23,6 +19,8 @@ let searchBtn = document.getElementById("search-btn");
 let clearHistory = document.getElementById("clear-history-btn");
 
 let previousSearches = document.getElementById("previous-searches");
+
+let cityInputVal = [];
 
 let i = 0;
 
@@ -37,7 +35,7 @@ let weatherForecastData = {};
 
 function formSubmitHandler(event) {
     event.preventDefault();
-    event.stopPropagation();
+    // event.stopPropagation();
 
     cityInputVal = document.getElementById("city-search-input").value;
 
@@ -45,8 +43,6 @@ function formSubmitHandler(event) {
         alert("Please enter a city");
         return;
     }
-
-    console.log(cityInputVal)
 
     saveHistory();
 
@@ -94,8 +90,6 @@ function saveHistory() {
 
 function getApi() {
 
-
-
     //API request based on city name to obtain the latitude and longitude
 
     console.log(cityInputVal)
@@ -104,10 +98,11 @@ function getApi() {
 
     fetch(queryUrl)
         .then(function (response) {
-            if (response.ok) {
-                console.log(response);
+            if (!response.ok) {
+                throw response.json();
+            } else {
+                return response.json();
             }
-            return response.json();
         })
 
         //save the data from the latitude and longitude API request to empty object
@@ -117,9 +112,15 @@ function getApi() {
 
             savedData = data;
 
-            //Second API request based on latitude and longitude that we obtained from our first API request
+            if (savedData.length === 0) {
+                alert("Sorry! We couldn't find " + cityInputVal + ". Please try again");
 
-            return fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + savedData[0].lat + "&lon=" + savedData[0].lon + "&units=metric&exclude=hourly,minutely&appid=" + APIKey)
+            } else {
+
+                //Second API request based on latitude and longitude that we obtained from our first API request
+
+                return fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + savedData[0].lat + "&lon=" + savedData[0].lon + "&units=metric&exclude=hourly,minutely&appid=" + APIKey)
+            }
 
         })
         .then(function (response) {
@@ -142,6 +143,9 @@ function getApi() {
 
             }
         })
+        .catch(function (error) {
+            console.log(error);
+        });
 }
 
 
@@ -199,7 +203,7 @@ function printWeather() {
     weatherIcon.setAttribute("alt", "Icon showing current weather status of " + weatherForecastData.current.weather[0].description);
     currentForecast.appendChild(weatherIcon);
 
-    let currentForecastDetails = ["Conditions: " + weatherForecastData.current.weather[0].main, "Temp: " + weatherForecastData.current.temp + " ℃", "Wind: " + weatherForecastData.current.wind_speed + " kmph", "Humidity: " + weatherForecastData.current.humidity + " %", "UV Index: " + weatherForecastData.current.uvi];
+    let currentForecastDetails = ["Conditions: " + weatherForecastData.current.weather[0].main, "Temp: " + weatherForecastData.current.temp + " ℃", "Feels like: " + weatherForecastData.current.feels_like + " ℃", "Wind: " + weatherForecastData.current.wind_speed + " kmph", "Humidity: " + weatherForecastData.current.humidity + " %", "UV Index: " + weatherForecastData.current.uvi];
 
     //create an li element for each weather attribute conditions, temp, wind speed, humidity and UV index
 
@@ -219,22 +223,22 @@ function printWeather() {
 
     if (weatherForecastData.current.uvi <= 2) {
 
-        liEls[4].classList.add("bg-success", "text-white");
+        liEls[5].classList.add("bg-success", "text-white");
 
-        console.log(liEls[4]);
+        console.log(liEls[5]);
 
     } else if (weatherForecastData.current.uvi >= 2 && weatherForecastData.current.uvi <= 5) {
 
-        liEls[4].classList.add("bg-warning");
-        console.log(liEls[4]);
+        liEls[5].classList.add("bg-warning");
+        console.log(liEls[5]);
     }
     else if (weatherForecastData.current.uvi >= 5 && weatherForecastData.current.uvi <= 7) {
 
-        liEls[4].classList.add("bg-danger", "bg-opacity-50", "text-white");
+        liEls[5].classList.add("bg-danger", "bg-opacity-50", "text-white");
 
     } else {
 
-        liEls[4].classList.add("bg-danger", "text-white");
+        liEls[5].classList.add("bg-danger", "text-white");
 
     }
     //make the background of today's forecast change depending on the weather condition
@@ -279,7 +283,7 @@ function printWeather() {
         //create bootstrap card for the five-day future forecast
 
         let fiveDayForecastContainer = document.createElement("div");
-        fiveDayForecastContainer.classList.add("card", "text-light", "p-2", "m-1", "d-inline-flex");
+        fiveDayForecastContainer.classList.add("col", "card", "text-white");
         fiveDayForecastContainer.setAttribute("id", "five-day-container");
         futureForecast.append(fiveDayForecastContainer);
 
@@ -316,7 +320,7 @@ function printWeather() {
 
         let futureForecastFragment = document.createDocumentFragment();
 
-        let futureForecastDetails = [futureDay + " " + futureMonthFull + " " + futureYear, "Conditions: " + weatherForecastData.daily[i].weather[0].main, "Temp: " + weatherForecastData.current.temp + " ℃", "Wind: " + weatherForecastData.daily[i].wind_speed + " kmph", "Humidity: " + weatherForecastData.daily[i].humidity + " %"];
+        let futureForecastDetails = [futureDay + " " + futureMonthFull + " " + futureYear, "Conditions: " + weatherForecastData.daily[i].weather[0].main, "Min: " + weatherForecastData.daily[i].temp.min + " ℃", "Max: " + weatherForecastData.daily[i].temp.max + " ℃", "Wind: " + weatherForecastData.daily[i].wind_speed + " kmph", "Humidity: " + weatherForecastData.daily[i].humidity + " %"];
 
         futureForecastDetails.forEach(function (future) {
 
