@@ -31,11 +31,10 @@ let savedData = {};
 let weatherForecastData = {};
 
 
-//prevent form from refreshing page and prevent user from not entering a city
+//prevent form from being cleared upon clicking search and prevent user from not entering a city
 
 function formSubmitHandler(event) {
     event.preventDefault();
-    // event.stopPropagation();
 
     cityInputVal = document.getElementById("city-search-input").value;
 
@@ -50,49 +49,13 @@ function formSubmitHandler(event) {
 
 }
 
-// function storeThingy() {
-
-//     localStorage.setItem("Thingy", cityInputVal);
-
-
-// }
-
-
-function saveHistory() {
-
-    // let retrieveThingy = [];
-
-    let savedCity = cityInputVal;
-
-    // retrieveThingy.push(savedCity);
-
-    localStorage.setItem(savedCity, savedCity);
-
-
-
-    // retrieveThingy = localStorage.getItem(savedCity, savedCity);
-
-    let printHistory = document.createElement("button");
-    printHistory.setAttribute("class", "searchHistoryBtn")
-    printHistory.textContent = cityInputVal;
-    printHistory.value = cityInputVal;
-    previousSearches.appendChild(printHistory);
-
-
-    // let searchInput = cityInputVal.value;
-    //     getApi(searchInput);
-    //     searchHistory.push(searchInput);
-    //     localStorage.setItem("search", JSON.stringify(searchHistory));
-}
-
-
-//get the API
+//call the API
 
 function getApi() {
 
     //API request based on city name to obtain the latitude and longitude
 
-    console.log(cityInputVal)
+    // console.log(cityInputVal)
 
     let queryUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + cityInputVal + "&appid=" + APIKey;
 
@@ -105,19 +68,22 @@ function getApi() {
             }
         })
 
-        //save the data from the latitude and longitude API request to empty object
+        //save the data from the latitude and longitude API request to empty object. Alert user if their input is invalid and resulted in the API promise not being fulfilled
 
         .then(function (data) {
-            console.log(data)
+            // console.log(data)
 
             savedData = data;
 
+            //if no data was retrieved from the API call, alert the user that the input was invalid
+
             if (savedData.length === 0) {
                 alert("Sorry! We couldn't find " + cityInputVal + ". Please try again");
+                return;
 
             } else {
 
-                //Second API request based on latitude and longitude that we obtained from our first API request
+                //Second API request based on latitude and longitude that we obtained from our first API request to retrieve weather data for that location
 
                 return fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + savedData[0].lat + "&lon=" + savedData[0].lon + "&units=metric&exclude=hourly,minutely&appid=" + APIKey)
             }
@@ -133,10 +99,14 @@ function getApi() {
         //save the second API request's data to the second empty object
         .then(function (data) {
 
+            console.log(data);
+
             weatherForecastData = data
 
+            //if no data was retrieved from second API call, alert user that there was an issue
+
             if (!Object.keys(weatherForecastData).length) {
-                console.log("No weather")
+                alert("Unable to display weather for that location. Please try again.")
             } else {
 
                 printWeather();
@@ -169,11 +139,23 @@ function printWeather() {
 
     let currentDate = new Date(weatherForecastData.current.dt * 1000);
 
+    //get the weekday and format it as the full weekday name
+
+    let weekdayOptions = { weekday: "long" };
+
+    let currentWeekday = new Intl.DateTimeFormat("en-GB", weekdayOptions).format(currentDate);
+
+    //get the current date
+
     let day = currentDate.getDate();
+
+    // get the current month and format it as the full month name
 
     let currentMonthOptions = { month: "long" };
 
     let currentMonthFull = new Intl.DateTimeFormat("en-GB", currentMonthOptions).format(currentDate);
+
+    //get the year and display it as the full year
 
     let year = currentDate.getFullYear();
 
@@ -187,7 +169,7 @@ function printWeather() {
 
     let displayDate = document.createElement("p");
     displayDate.classList.add("display-date");
-    displayDate.textContent = day + " " + currentMonthFull + " " + year;
+    displayDate.textContent = currentWeekday + ", " + day + " " + currentMonthFull + " " + year;
 
     cityName.appendChild(displayDate);
 
@@ -207,11 +189,15 @@ function printWeather() {
 
     //create an li element for each weather attribute conditions, temp, wind speed, humidity and UV index
 
+    let ulEl = document.createElement("ul");
+
     currentForecastDetails.forEach(function (current) {
+
         let liEl = document.createElement("li");
         liEl.setAttribute("class", "li-items");
         liEl.textContent = current;
-        currentForecastFragment.appendChild(liEl);
+        ulEl.appendChild(liEl)
+        currentForecastFragment.appendChild(ulEl);
 
     })
 
@@ -225,12 +211,10 @@ function printWeather() {
 
         liEls[5].classList.add("bg-success", "text-white");
 
-        console.log(liEls[5]);
-
     } else if (weatherForecastData.current.uvi >= 2 && weatherForecastData.current.uvi <= 5) {
 
         liEls[5].classList.add("bg-warning");
-        console.log(liEls[5]);
+
     }
     else if (weatherForecastData.current.uvi >= 5 && weatherForecastData.current.uvi <= 7) {
 
@@ -241,71 +225,42 @@ function printWeather() {
         liEls[5].classList.add("bg-danger", "text-white");
 
     }
-    //make the background of today's forecast change depending on the weather condition
+
+    //function to make the background of today's forecast change depending on the weather condition
+
     currentWeatherColour();
 
-    // let liEls = Array.from(document.querySelectorAll(".li-items"));
+    displayFutureForecast();
+}
 
-    // console.log(liEls[5]);
+// Display details for 5 day forecast
 
-    // liEls[5].setAttribute("class", "bg-danger");
-
-    // alert("high uvi");
-    // }
-
-    // let cityEl = document.createElement('h3');
-    // cityEl.textContent = savedData[0].name + " - " + weatherForecastData.current.weather[0].main;
-    // todayForecastCard.appendChild(cityEl);
-
-    // let tempEl = document.createElement('li');
-    // tempEl.textContent = "Temp: " + weatherForecastData.current.temp;
-    // todayForecastCard.appendChild(tempEl);
-
-    // let windEl = document.createElement('li');
-    // windEl.textContent = "Wind speed: " + weatherForecastData.current.wind_speed;
-    // todayForecastCard.appendChild(windEl);
+function displayFutureForecast() {
 
 
-    // let humidityEl = document.createElement('li');
-    // humidityEl.textContent = "Humidity: " + weatherForecastData.current.humidity;
-    // todayForecastCard.appendChild(humidityEl);
-
-    // let uvEl = document.createElement('li');
-    // uvEl.textContent = "UV Index: " + weatherForecastData.current.uvi;
-    // todayForecastCard.appendChild(uvEl);
-
-    //future forecast. Loop over the weatherForecastData.daily object and return conditions, temp, wind, humidity and UV for the next five days
-
-    //loop through the daily weatherForecastData to get the five-day forecast. Skip over index 0 as that contains current date's daily details
 
     for (let i = 1; i < Object.keys(weatherForecastData.daily)[6]; i++) {
 
         //create bootstrap card for the five-day future forecast
 
         let fiveDayForecastContainer = document.createElement("div");
-        fiveDayForecastContainer.classList.add("col", "card", "text-white");
+        fiveDayForecastContainer.classList.add("col", "card", "text-white", "flex-grow-1");
         fiveDayForecastContainer.setAttribute("id", "five-day-container");
+        let ulEl = document.createElement("ul");
+        fiveDayForecastContainer.appendChild(ulEl);
         futureForecast.append(fiveDayForecastContainer);
 
         //display future dates
 
         let futureDate = new Date(weatherForecastData.daily[i].dt * 1000);
 
-        // console.log(futureDate);
-
         let futureDay = futureDate.getDate();
-
-        // console.log(futureday);
 
         let futureMonthOptions = { month: "long" };
 
         let futureMonthFull = new Intl.DateTimeFormat("en-GB", futureMonthOptions).format(futureDate);
 
-        // console.log(futureMonthFull);
-
         let futureYear = futureDate.getFullYear();
-
-        // console.log(futureyear);
 
         // create weather icons for future weather forecast
 
@@ -322,123 +277,21 @@ function printWeather() {
 
         let futureForecastDetails = [futureDay + " " + futureMonthFull + " " + futureYear, "Conditions: " + weatherForecastData.daily[i].weather[0].main, "Min: " + weatherForecastData.daily[i].temp.min + " ℃", "Max: " + weatherForecastData.daily[i].temp.max + " ℃", "Wind: " + weatherForecastData.daily[i].wind_speed + " kmph", "Humidity: " + weatherForecastData.daily[i].humidity + " %"];
 
+
         futureForecastDetails.forEach(function (future) {
 
             let liEl = document.createElement("li");
             liEl.textContent = future;
             futureForecastFragment.appendChild(liEl);
 
-            //ADD STYLING FOR YOUR LI STUFF HERE
         })
 
         fiveDayForecastContainer.appendChild(futureForecastFragment);
     }
+
 }
 
-
-// searchBtn.addEventListener("click", function () {
-
-//     let searchInput = cityInputVal.value;
-//     getApi(searchInput);
-//     searchHistory.push(searchInput);
-//     localStorage.setItem("search", JSON.stringify(searchHistory));
-
-//     renderSearchHistory();
-
-// })
-
-// function renderSearchHistory() {
-//     previousSearches.innerHTML = "";
-
-//     for (let i = 0; i < searchHistory.length; i++) {
-
-//         let prevSearchItem = document.createElement("p");
-
-//         previousSearches.appendChild(prevSearchItem);
-//     }
-
-// }
-
-// function savePreviousSearches() {
-
-//     let prevHistory = [];
-//     prevHistory = JSON.parse(localStorage.getItem("History")) || [];
-
-//     prevHistory.push;
-
-//     alert(prevHistory);
-
-//     localStorage.setItem("History", JSON.stringify(prevHistory));
-// }
-
-// function searchHistory() {
-//     previousSearches.city.push.(cityInputVal);
-//     localStorage.setItem("City Name", JSON.stringify(cityInputVal));
-// }
-
-// function onLoad() {
-//     if (localStorage.getItem("History")) {
-//         previousSearches = JSON.parse(localStorage.getItem("History"));
-
-//     }
-// }
-
-// function addHistory(previousSearchHistory) {
-//     previousSearches.city.push(previousSearchHistory);
-//     localStorage.setItem("History", JSON.stringify(previousSearches));
-// }
-
-// function showDate() {
-
-//     let currentTimestamp = parseInt(weatherForecastData.current.dt);
-
-//     let currentMilliseconds = currentTimestamp * 1000;
-
-//     let currentDate = new Date(currentMilliseconds);
-
-//     currentDateArray = currentDate.toLocaleString("en-UK");
-
-//     console.log(currentDateArray);
-
-// }
-
-// function currentDate() {
-
-//     let todayDate = document.createElement("h2");
-//     todayDate.text(moment.unix(parseInt(weatherForecastData.current.dt)).format("DD MM YYYY"));
-//     currentCity.appendChild(currentDate);
-// }
-
-// function getHistory() {
-
-
-// let historyItem = document.createElement("p");
-
-// let searchItems = searchHistoryArray.push(cityInputVal);
-
-
-
-
-// historyItem.textContent = searchItems;
-// previousSearches.appendChild(historyItem);
-
-
-
-
-// let retrieveHistory = JSON.parse(localStorage.getItem(searchHistory)) || [];
-
-// searchHistory.push(retrieveHistory)
-
-
-
-// }
-
-// function init() {
-
-//     readThingy;
-// }
-
-//just adding some colour changes to the background of the current weather card for funsies
+//add coloured backgrounds to the current forecast card based on weather description from the API call
 
 function currentWeatherColour() {
 
@@ -460,35 +313,98 @@ function currentWeatherColour() {
     }
 }
 
+//Save search history
+
+function saveHistory() {
+
+    //object to store in local storage that saves the cityInputVal
+
+    let savedCity = {
+
+        searchedCity: cityInputVal
+    }
+
+    //retrieve the info from local storage
+
+    let savedCities = JSON.parse(localStorage.getItem("searchHistory"));
+
+    //if there's no saved cities, then create an empty array
+
+    if (savedCities === null) {
+        savedCities = [];
+    }
+
+    //add the users input into the array and then save it to local storage
+
+    savedCities.push(savedCity);
+
+    localStorage.setItem("searchHistory", JSON.stringify(savedCities));
+
+    //create buttons for user to click on in the previous searches section
+
+    let printHistory = document.createElement("button");
+    printHistory.setAttribute("class", "searchHistoryBtn")
+    printHistory.textContent = savedCity.searchedCity;
+    printHistory.value = savedCity.searchedCity;
+    previousSearches.appendChild(printHistory);
+
+}
+
+//display search history
+
+function displayHistory() {
+
+    //retrieve the search history from local storage and if there's nothing stored, end the function
+
+    let searchData = JSON.parse(localStorage.getItem("searchHistory"));
+
+    if (!searchData) {
+        return;
+
+    }
+    //create a button for each item in the array
+    for (i = 0; i < searchData.length; i++) {
+        console.log(searchData.length)
+
+        let printHistoryBtn = document.createElement("button");
+        printHistoryBtn.setAttribute("class", "searchHistoryBtn");
+        printHistoryBtn.textContent = searchData[i].searchedCity;
+        printHistoryBtn.value = searchData[i].searchedCity;
+        previousSearches.appendChild(printHistoryBtn);
+
+    }
+}
+
+//event handlers for the previous history buttons so that the user can click on them to display previously searched city weather details
+
 previousSearches.addEventListener("click", function (event) {
     if (event.target.className === "searchHistoryBtn") {
-        console.log("click!");
+        // console.log("click!");
         event.stopPropagation;
 
-        // let savedHistory = Array.from(document.querySelectorAll(".searchHistoryBtn"));
-
         cityInputVal = event.target.value;
-        // cityInputVal = "";
-        // localStorage.getItem("Thingy");
+
         getApi();
     }
 
 });
 
+//event handler for clear history button
+
 clearHistory.addEventListener("click", function () {
-    // event.preventDefault;
-    // event.stopPropagation;
-    console.log("click!");
+
+    // console.log("click!");
     localStorage.clear();
     previousSearches.innerHTML = "";
 
 })
 
-// searchHistoryBtn.addEventListener("click", function (event) {
-//     event.stopPropagation();
-//     event.target(getApi);
-
-// });
 //submit button event listener to start everything off
 
 searchFormEl.addEventListener("submit", formSubmitHandler);
+
+function init() {
+    displayHistory();
+}
+
+init();

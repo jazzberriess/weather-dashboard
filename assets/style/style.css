@@ -27,6 +27,9 @@ section {
 header {
     background: var(--bg-color);
     text-shadow: var(--text-shadow);
+    height: 9rem;
+    display: flex;
+    align-items: center;
 }
 
 #page-title {
@@ -37,11 +40,22 @@ header {
     color: rgba(248,254,255,100);
 }
 
+h3 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
 /* alignment and font size for search titles  */
 
 h2.header-align-center {
     font-size: 1.6rem;
     text-align: center;
+}
+
+/* making the li items on the current forecast card split into two columns */
+
+ul {
+    column-count: 2;
 }
 
 /* styling for li elements added in with JavaScript. Added text shadow for readability on darker background colour */
@@ -126,36 +140,36 @@ li.li-items {
 /* setting the colurs for various weather statuses */
 
 .thunderstorm {
-    background-color: darkgray;
+    background: linear-gradient(140deg, rgba(169,169,169,100), rgba(169,169,169,0));
 }
 
 .drizzle {
-    background-color:gainsboro ;
+    background: linear-gradient(140deg,rgba(220,220,220,100), rgba(220,220,220,0));
 }
 
 .rain {
-    background-color:lightsteelblue ;
+    background: linear-gradient(140deg, rgba(176, 196,222,100),rgba(176,196,222,0));
 }
 
 .snow {
-    background-color: aliceblue  ;
+    background: linear-gradient(140deg,rgba(240,248,255,100), rgba(240,248,255,0));
 }
 
 .atmosphere {
-    background-color: lavender  ;
+    background: linear-gradient(140deg,rgba(230, 230, 250, 100), rgba(230, 230, 250, 0));
 }
 
 .clouds {
-    background-color: lightgrey  ;
+    background: linear-gradient(140deg,rgba(211, 211, 211, 100), rgba(211, 211, 211, 0));
 }
 
 .clear {
-    background-color:lemonchiffon  ;
+    background: linear-gradient(140deg,rgba(255, 242, 205, 100), rgba(255, 242, 205, 0));
 }
 
 /* styling for footer */
 
-footer h3 {
+footer h4 {
     font-size: 1.1rem ;
     margin-left: 2rem;
 }
