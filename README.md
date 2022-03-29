@@ -5,7 +5,7 @@ Weather Dashboard
 
 A dashboard that displays the weather based on what city the user inputs. The search accepts typed city names as well as ISO 3166 country codes.
 
-Building this app has helped me learn more about server-side API's, as the weather data is pulled via the Open WeatherMap API. I also learned a bit about the reading and interpreting the data received from an API call and how best to filter out the details one needs to display.
+Building this app has helped me learn more about server-side API's, as the weather data is pulled via the Open WeatherMap API. I also learned a bit about reading and interpreting the data received in a JSON object from an API call and how best to filter out the details one needs to display.
 
 Lots of research went into this one, as you can see from the resources below.
 
