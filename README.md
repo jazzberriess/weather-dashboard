@@ -24,6 +24,9 @@ Built using:
 ## Demo
 
 ![Sreenshot of final web app splash page](./assets/images/weather-dashboard-static.png)
+
+---
+
 ![Final web app mini demo](./assets/images/Weather%20Dashboard.gif)
 
 ## Resources
