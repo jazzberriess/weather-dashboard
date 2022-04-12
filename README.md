@@ -2,20 +2,28 @@
 
 A dashboard that displays the weather based on what city the user inputs. The search accepts typed city names as well as ISO 3166 country codes.
 
-Building this app has helped me learn more about server-side API's, as the weather data is pulled via the Open WeatherMap API. I also learned a bit about reading and interpreting the data received in a JSON object from an API call and how best to filter out the details one needs to display.
-
-Lots of research went into this one, as you can see from the resources below.
+Building this app has helped me learn more about server-side API's, as the weather data is pulled via the Open WeatherMap API. I also learned about reading and interpreting the data received in a JSON object from an API call and how best to filter out the details one needs to display.
 
 ## Usage
 
-See the deployed website on [GitHub Pages](https://jazzberriess.github.io/wk-06-weather-dashboard/)
+See the deployed website on [GitHub Pages](https://jazzberriess.github.io/weather-dashboard/)
 
-Link to the [GitHub Repo](https://github.com/jazzberriess/wk-06-weather-dashboard)
+Link to the [GitHub Repo](https://github.com/jazzberriess/weather-dashboard)
 
-Built using HTML, CSS and JavaScript, along with the help of Bootstrap.
+# Technologies Used
+
+Built using:
+
+* HTML
+* CSS
+* JavaScript
+* Bootstrap
+* OpenWeather API
+* localStorage Web API
 
 ## Demo
 
+![Sreenshot of final web app splash page](./assets/images/weather-dashboard-static.png)
 ![Final web app mini demo](./assets/images/Weather%20Dashboard.gif)
 
 ## Resources
@@ -46,13 +54,13 @@ Built using HTML, CSS and JavaScript, along with the help of Bootstrap.
 
 * [Handling Failed HTTP Responses with fetch()](https://www.tjvantoll.com/2015/09/13/fetch-and-errors/)
 
-* Class notes, recording and office hours from Week 6
-
-* Fellow classmates
-
 
 ## Licensce 
 
 MIT License
 
-Copyright © 2022 Christi Scappatura
+&copy; 2022 Christi Scappatura
+
+## Contact
+
+[Christi on GitHub](https://github.com/jazzberriess)
